@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 typedef struct t_config
 {
@@ -18,6 +19,43 @@ typedef struct t_config
     char *scheduler;
 }t_config;
 
+typedef struct t_queue
+{
+    struct t_coder* coders;
+    size_t size;
+    size_t capacity;
+    pthread_mutex_t thread; 
+}t_queue;
+
+typedef struct t_dongle
+{
+    pthread_mutex_t lock;
+    long available_at;
+    pthread_cond_t sleep;
+}t_dongle;
+
+typedef struct t_coder
+{
+    pthread_t thread;
+    size_t coder_ID;
+    size_t com_compiles;
+    size_t timestamp;
+    t_dongle *left_dongle;
+    t_dongle *right_dongle;
+    struct s_data *data;
+}t_coder;
+
+typedef struct t_data
+{
+    struct t_dongle* dongles;
+    struct t_coder* coders;
+    struct t_config* config;
+    pthread_mutex_t write_mutex;
+    size_t is_over;
+    pthread_mutex_t sim_mutex;
+    long long start_time;
+
+}t_data;
 
 size_t	ft_atoi(const char *str);
 int	ft_isdigit(int c);
