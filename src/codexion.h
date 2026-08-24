@@ -39,10 +39,10 @@ typedef struct t_coder
     pthread_t thread;
     size_t coder_ID;
     size_t com_compiles;
-    size_t timestamp;
+    long long last_compile_start;
     t_dongle *left_dongle;
     t_dongle *right_dongle;
-    struct s_data *data;
+    struct t_data *data;
 }t_coder;
 
 typedef struct t_data
@@ -54,7 +54,8 @@ typedef struct t_data
     size_t is_over;
     pthread_mutex_t sim_mutex;
     long long start_time;
-
+    pthread_t monitor;
+    t_queue queue;
 }t_data;
 
 size_t	ft_atoi(const char *str);
