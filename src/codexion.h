@@ -1,6 +1,9 @@
 #ifndef CODEXION_H
 #define CODEXION_H
 
+typedef struct t_data t_data;
+typedef struct t_coder t_coder;
+
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,16 +24,16 @@ typedef struct t_config
 
 typedef struct t_queue
 {
-    struct t_coder* coders;
+    struct t_coder** coders;
     size_t size;
     size_t capacity;
-    pthread_mutex_t thread; 
+    pthread_mutex_t queue_mutex; 
 }t_queue;
 
 typedef struct t_dongle
 {
     pthread_mutex_t lock;
-    long available_at;
+    long long available_at;
     pthread_cond_t sleep;
 }t_dongle;
 
