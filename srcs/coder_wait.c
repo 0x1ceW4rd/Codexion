@@ -6,7 +6,7 @@
 /*   By: aezzirar <aezzirar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 13:40:55 by aezzirar          #+#    #+#             */
-/*   Updated: 2026/09/09 20:32:14 by aezzirar         ###   ########.fr       */
+/*   Updated: 2026/09/09 20:57:21 by aezzirar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,14 @@ void	wait_for_turn(t_coder *c)
 	}
 	else
 		pthread_cond_wait(&c->sim->state_cond, &c->sim->state_mutex);
+}
+
+void	*handle_single_coder(t_coder *coder)
+{
+	print_log(coder->sim, coder->id, "has taken a dongle");
+	pthread_mutex_lock(&coder->sim->state_mutex);
+	while (!coder->sim->stop_flag)
+		pthread_cond_wait(&coder->sim->state_cond, &coder->sim->state_mutex);
+	pthread_mutex_unlock(&coder->sim->state_mutex);
+	return (NULL);
 }

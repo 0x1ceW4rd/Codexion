@@ -6,7 +6,7 @@
 /*   By: aezzirar <aezzirar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 13:41:07 by aezzirar          #+#    #+#             */
-/*   Updated: 2026/09/09 20:39:06 by aezzirar         ###   ########.fr       */
+/*   Updated: 2026/09/09 20:56:50 by aezzirar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,21 @@ static void	release_dongles(t_coder *coder)
 	pthread_mutex_unlock(&sim->state_mutex);
 }
 
-static void	*handle_single_coder(t_coder *coder)
+static void	coder_cycle(t_coder *c)
 {
-	print_log(coder->sim, coder->id, "has taken a dongle");
-	pthread_mutex_lock(&coder->sim->state_mutex);
-	while (!coder->sim->stop_flag)
-		pthread_cond_wait(&coder->sim->state_cond, &coder->sim->state_mutex);
-	pthread_mutex_unlock(&coder->sim->state_mutex);
-	return (NULL);
+	print_log(c->sim, c->id, "has taken a dongle");
+	print_log(c->sim, c->id, "has taken a dongle");
+	print_log(c->sim, c->id, "is compiling");
+	precise_sleep(c->sim->time_to_compile, c->sim);
+	release_dongles(c);
+	if (is_sim_stopped(c->sim))
+		return ;
+	print_log(c->sim, c->id, "is debugging");
+	precise_sleep(c->sim->time_to_debug, c->sim);
+	if (is_sim_stopped(c->sim))
+		return ;
+	print_log(c->sim, c->id, "is refactoring");
+	precise_sleep(c->sim->time_to_refactor, c->sim);
 }
 
 void	*coder_routine(void *arg)
@@ -99,19 +106,7 @@ void	*coder_routine(void *arg)
 	{
 		if (!acquire_dongles(coder))
 			break ;
-		print_log(sim, coder->id, "has taken a dongle");
-		print_log(sim, coder->id, "has taken a dongle");
-		print_log(sim, coder->id, "is compiling");
-		precise_sleep(sim->time_to_compile, sim);
-		release_dongles(coder);
-		if (is_sim_stopped(sim))
-			break ;
-		print_log(sim, coder->id, "is debugging");
-		precise_sleep(sim->time_to_debug, sim);
-		if (is_sim_stopped(sim))
-			break ;
-		print_log(sim, coder->id, "is refactoring");
-		precise_sleep(sim->time_to_refactor, sim);
+		coder_cycle(coder);
 	}
 	return (NULL);
 }

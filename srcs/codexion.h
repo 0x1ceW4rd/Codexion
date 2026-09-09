@@ -6,7 +6,7 @@
 /*   By: aezzirar <aezzirar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 13:41:18 by aezzirar          #+#    #+#             */
-/*   Updated: 2026/09/09 13:41:18 by aezzirar         ###   ########.fr       */
+/*   Updated: 2026/09/09 20:58:25 by aezzirar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void		print_log(t_sim *sim, int coder_id, const char *msg);
 int			can_take_dongles(t_coder *c, long long now);
 long long	calc_wait_time(t_coder *c, long long now);
 void		wait_for_turn(t_coder *c);
+void		*handle_single_coder(t_coder *coder);
 
 /* Simulation Setup and Routines */
 int			init_simulation(t_sim *sim);

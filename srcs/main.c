@@ -6,7 +6,7 @@
 /*   By: aezzirar <aezzirar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 13:42:06 by aezzirar          #+#    #+#             */
-/*   Updated: 2026/09/09 20:41:10 by aezzirar         ###   ########.fr       */
+/*   Updated: 2026/09/09 20:56:11 by aezzirar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,18 @@ static long long	parse_pos_long(const char *str, int *err)
 	res = 0;
 	i = 0;
 	if (!str || !str[0])
-	{
 		*err = 1;
-		return (-1);
-	}
-	while (str[i])
+	while (!(*err) && str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-		{
 			*err = 1;
-			return (-1);
-		}
-		res = res * 10 + (str[i] - '0');
+		else
+			res = res * 10 + (str[i++] - '0');
 		if (res > 2147483647)
-		{
 			*err = 1;
-			return (-1);
-		}
-		i++;
 	}
+	if (*err)
+		return (-1);
 	return (res);
 }
 
