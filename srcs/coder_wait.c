@@ -6,7 +6,7 @@
 /*   By: aezzirar <aezzirar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 13:40:55 by aezzirar          #+#    #+#             */
-/*   Updated: 2026/09/09 15:54:09 by aezzirar         ###   ########.fr       */
+/*   Updated: 2026/09/09 20:32:14 by aezzirar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,16 @@ long long	calc_wait_time(t_coder *c, long long now)
 
 void	wait_for_turn(t_coder *c)
 {
-	long long		now;
-	long long		wait_until;
-	struct timespec	ts;
+	long long	now;
+	long long	wait_until;
 
 	now = get_sim_time(c->sim->start_time);
 	wait_until = calc_wait_time(c, now);
 	if (wait_until > now)
 	{
-		get_abs_timespec(&ts, wait_until - now);
-		pthread_cond_timedwait(&c->sim->state_cond,
-			&c->sim->state_mutex, &ts);
+		pthread_mutex_unlock(&c->sim->state_mutex);
+		usleep((wait_until - now) * 1000);
+		pthread_mutex_lock(&c->sim->state_mutex);
 	}
 	else
 		pthread_cond_wait(&c->sim->state_cond, &c->sim->state_mutex);

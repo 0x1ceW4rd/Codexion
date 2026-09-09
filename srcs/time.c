@@ -6,7 +6,7 @@
 /*   By: aezzirar <aezzirar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 13:42:28 by aezzirar          #+#    #+#             */
-/*   Updated: 2026/09/09 15:55:50 by aezzirar         ###   ########.fr       */
+/*   Updated: 2026/09/09 20:31:52 by aezzirar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ void	precise_sleep(long long ms, t_sim *sim)
 	long long	start;
 
 	start = get_time_ms();
+	if (ms > 10)
+		usleep((ms - 10) * 1000);
 	while (!is_sim_stopped(sim))
 	{
 		if (get_time_ms() - start >= ms)
 			break ;
-		usleep(500);
+		usleep(1000);
 	}
 }

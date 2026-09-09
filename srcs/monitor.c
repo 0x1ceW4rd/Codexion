@@ -6,7 +6,7 @@
 /*   By: aezzirar <aezzirar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 13:42:17 by aezzirar          #+#    #+#             */
-/*   Updated: 2026/09/09 15:55:47 by aezzirar         ###   ########.fr       */
+/*   Updated: 2026/09/09 20:32:36 by aezzirar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	*monitor_routine(void *arg)
 			break ;
 		}
 		pthread_mutex_unlock(&sim->state_mutex);
-		usleep(1000);
+		usleep(2000);
 	}
 	return (NULL);
 }
