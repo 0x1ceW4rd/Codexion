@@ -6,13 +6,13 @@
 #    By: aezzirar <aezzirar@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/09/09 13:40:33 by aezzirar          #+#    #+#              #
-#    Updated: 2026/09/09 17:09:14 by aezzirar         ###   ########.fr        #
+#    Updated: 2026/09/12 14:56:56 by aezzirar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME        = codexion
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror -pthread -Iincludes
+CFLAGS      = -Wall -Wextra -Werror -pthread
 RM          = rm -rf
 
 SRCS_DIR    = srcs

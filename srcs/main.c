@@ -6,13 +6,13 @@
 /*   By: aezzirar <aezzirar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/09 13:42:06 by aezzirar          #+#    #+#             */
-/*   Updated: 2026/09/09 20:56:11 by aezzirar         ###   ########.fr       */
+/*   Updated: 2026/09/12 15:17:59 by aezzirar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-static long long	parse_pos_long(const char *str, int *err)
+static long long	parse_long(const char *str, int *err)
 {
 	long long	res;
 	int			i;
@@ -53,15 +53,16 @@ static int	parse_args(t_sim *sim, int argc, char **argv)
 	err = 0;
 	if (argc != 9)
 		return (0);
-	sim->num_coders = (int)parse_pos_long(argv[1], &err);
-	sim->time_to_burnout = parse_pos_long(argv[2], &err);
-	sim->time_to_compile = parse_pos_long(argv[3], &err);
-	sim->time_to_debug = parse_pos_long(argv[4], &err);
-	sim->time_to_refactor = parse_pos_long(argv[5], &err);
-	sim->num_compiles_required = (int)parse_pos_long(argv[6], &err);
-	sim->dongle_cooldown = parse_pos_long(argv[7], &err);
+	sim->num_coders = (int)parse_long(argv[1], &err);
+	sim->time_to_burnout = parse_long(argv[2], &err);
+	sim->time_to_compile = parse_long(argv[3], &err);
+	sim->time_to_debug = parse_long(argv[4], &err);
+	sim->time_to_refactor = parse_long(argv[5], &err);
+	sim->num_compiles_required = (int)parse_long(argv[6], &err);
+	sim->dongle_cooldown = parse_long(argv[7], &err);
 	parse_sched(sim, argv[8], &err);
-	if (err || sim->num_coders <= 0 || sim->time_to_burnout <= 0)
+	if (err || sim->num_coders <= 0 || sim->time_to_burnout <= 0
+		|| sim->num_compiles_required <= 0)
 		return (0);
 	return (1);
 }
