@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by 0x1ceW4rd.*
+*This project has been created as part of the 42 curriculum by aezzirar.*
 
 ## Description
 
